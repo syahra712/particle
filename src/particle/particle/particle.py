@@ -791,7 +791,7 @@ class Particle:
             if self.pdgid > 0:
                 return A
             return -A
-        if self._sm_partner_pdgid.is_quark:
+        if self.pdgid.is_quark or self.pdgid.is_squark:
             return Fraction(1, 3) if self.pdgid > 0 else Fraction(-1, 3)
         return 0
 
@@ -805,21 +805,9 @@ class Particle:
         All other particles have :math:`L = 0`.
         Note that this is the total lepton number and not a per-generation lepton number.
         """
-        if self._sm_partner_pdgid.is_lepton:
+        if self.pdgid.is_lepton or self.pdgid.is_slepton:
             return 1 if self.pdgid > 0 else -1
         return 0
-
-    @property
-    def _sm_partner_pdgid(self) -> PDGID:
-        """
-        The PDG ID of the Standard Model partner for a SUSY particle, else the PDG ID itself.
-
-        Squarks and sleptons carry the baryon and lepton numbers of their partner quark or lepton.
-        """
-        if not self.pdgid.is_SUSY:
-            return self.pdgid
-        sign = 1 if self.pdgid > 0 else -1
-        return PDGID(sign * (abs(int(self.pdgid)) % 1_000_000))
 
     @property
     def r_parity(self) -> int | None:
