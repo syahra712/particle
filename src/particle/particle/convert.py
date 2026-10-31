@@ -64,9 +64,8 @@ import numpy as np
 import pandas as pd
 
 from .. import data
-from .._compat.typing import Traversable
 from ..pdgid import PDGID, is_baryon
-from ..typing import StringOrIO
+from ..typing import StringOrIO, Traversable
 from .enums import (
     Charge,
     Charge_mapping,
@@ -405,7 +404,7 @@ def produce_files(
     # Entries to remove, see comments in file mass_width_2008_ext.fwf:
     # 30221 - the f(0)(1370) since it was renumbered
     # 5132 and 5232 - the Xi_b baryons got their IDs swapped at some stage
-    full_table.drop([30221, 5132, 5232], axis=0, inplace=True)
+    full_table = full_table.drop([30221, 5132, 5232], axis=0)
 
     # No longer write out the particle2008.csv file, which nobody should use
     # with open(particle2008, "w", newline="\n", encoding="utf-8") as f:
@@ -463,9 +462,7 @@ def produce_files(
 def version_header(filename: str, version_number: str) -> str:
     filename = os.path.basename(filename)
     version = version_number  # version of CSV files
-    today_date = datetime.date.isoformat(
-        datetime.datetime.now(tz=datetime.timezone.utc)
-    )
+    today_date = datetime.date.isoformat(datetime.datetime.now(tz=datetime.UTC))
     return f"# (c) Scikit-HEP project - Particle package data file - {filename} - version {version} - {today_date}\n"
 
 

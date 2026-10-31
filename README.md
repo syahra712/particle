@@ -36,7 +36,7 @@ or similar (use `--user`, `virtualenv`, etc. if you wish).
 
 ## Strict dependencies
 
-- [Python](http://docs.python-guide.org/en/latest/starting/installation/) (3.10+)
+- [Python](http://docs.python-guide.org/en/latest/starting/installation/) (3.11+)
 - [attrs](http://www.attrs.org/en/stable/) provides classes without boilerplate (similar to DataClasses in Python 3.7)
 - [hepunits](https://github.com/scikit-hep/hepunits)\_ provides units for the Scikit-HEP packages
 
@@ -255,8 +255,8 @@ If you want a non-default data file distributed with the package just proceed as
 
 ```python
 >>> from particle import data
->>> Particle.load_table(data.basepath / "particle2026.csv"))
->>> Particle.load_table(data.basepath / "nuclei2026.csv"), append=True)  # I still want nuclei info
+>>> Particle.load_table(data.basepath / "particle2026.csv")
+>>> Particle.load_table(data.basepath / "nuclei2026.csv", append=True)  # I still want nuclei info
 >>> Particle.table_names()  # list the loaded tables
 ```
 
